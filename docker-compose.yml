@@ -1,0 +1,18 @@
+version: '2'
+
+networks:
+  lb_web:
+    external: true
+
+services:
+  httpproxy:
+    image: jwilder/nginx-proxy
+    container_name: http-proxy
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "/data/certs:/etc/nginx/certs"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - lb_web
